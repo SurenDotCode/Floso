@@ -27,4 +27,4 @@
 
 ## 🔒 Privacy Policy
 
-Floso operates entirely locally on your device. For details, read our [Privacy Policy](https://SurendDotCode.github.io/Floso/).
+Floso operates entirely locally on your device. For details, read our [Privacy Policy](https://surendotcode.github.io/Floso/).
