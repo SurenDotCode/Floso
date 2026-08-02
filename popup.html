@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Floso</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="floso-shell">
+
+    <header class="floso-header">
+      <div class="floso-header-top">
+        <div class="floso-brand">
+          <svg class="floso-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="7" width="11" height="6" rx="3" transform="rotate(-20 7.5 10)" stroke="url(#linkGrad)" stroke-width="2"/>
+            <rect x="11" y="11" width="11" height="6" rx="3" transform="rotate(-20 16.5 14)" stroke="url(#linkGrad)" stroke-width="2"/>
+            <defs>
+              <linearGradient id="linkGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#cfd6de"/>
+                <stop offset="1" stop-color="#2dd4bf"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <span class="floso-title">FLOSO</span>
+        </div>
+
+        <div class="floso-credit">
+          <span class="credit-author">Made by Suren</span>
+          <span class="credit-email">yerrasuren@gmail.com</span>
+        </div>
+      </div>
+
+      <button id="capture-btn" class="floso-btn floso-btn--primary">
+        <span class="floso-btn-label">Capture current chat</span>
+      </button>
+    </header>
+
+    <div id="status-line" class="floso-status"></div>
+
+    <main class="floso-list-wrap">
+      <div id="empty-state" class="floso-empty" hidden>
+        <svg class="floso-empty-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="7" width="11" height="6" rx="3" transform="rotate(-20 7.5 10)" stroke="url(#emptyGrad)" stroke-width="1.6"/>
+          <rect x="11" y="11" width="11" height="6" rx="3" transform="rotate(-20 16.5 14)" stroke="url(#emptyGrad)" stroke-width="1.6"/>
+          <defs>
+            <linearGradient id="emptyGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#4a5560"/>
+              <stop offset="1" stop-color="#2dd4bf"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <p class="floso-empty-title">Nothing captured yet</p>
+        <p class="floso-empty-sub">Open a conversation on claude.ai, chatgpt.com, or gemini.google.com, then click "Capture current chat" above.</p>
+      </div>
+
+      <div id="list-header" class="floso-list-header" hidden>
+        <span id="capsule-count" class="floso-list-count"></span>
+        <button id="clear-all-btn" class="floso-text-btn floso-text-btn--danger">Clear all</button>
+      </div>
+      <ul id="capsule-list" class="floso-list"></ul>
+    </main>
+
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

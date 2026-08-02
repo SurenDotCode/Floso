@@ -1,0 +1,359 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  width: 340px;
+  max-height: 480px;
+  background:
+    radial-gradient(ellipse at 50% 120%, rgba(45, 212, 191, 0.07), transparent 55%),
+    #0b0c0d;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #e4e6e8;
+}
+
+.floso-mono {
+  font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
+}
+
+.floso-shell {
+  display: flex;
+  flex-direction: column;
+  max-height: 480px;
+}
+
+/* ---------- header ---------- */
+
+.floso-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 16px 14px;
+  background: #101112;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.floso-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.floso-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.floso-logo {
+  width: 21px;
+  height: 21px;
+  flex-shrink: 0;
+}
+
+.floso-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #f5f6f7;
+}
+
+/* ---------- header credit ---------- */
+
+.floso-credit {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  line-height: 1.25;
+}
+
+.credit-author {
+  font-size: 10px;
+  font-weight: 500;
+  color: #8b9298;
+}
+
+.credit-email {
+  font-size: 9px;
+  font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
+  color: #2dd4bf;
+  opacity: 0.85;
+}
+
+/* ---------- buttons & interactions ---------- */
+
+.floso-btn {
+  appearance: none;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: #16181a;
+  color: #e4e6e8;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.floso-btn:hover {
+  background: #1c1f21;
+  border-color: rgba(45, 212, 191, 0.45);
+}
+
+.floso-btn:active {
+  transform: scale(0.98);
+  background: #131415;
+}
+
+.floso-btn--primary {
+  width: 100%;
+}
+
+/* ---------- status line ---------- */
+
+.floso-status {
+  min-height: 0;
+  font-size: 11.5px;
+  font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
+  padding: 0 16px;
+  color: #2dd4bf;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.25s ease, opacity 0.25s ease, padding 0.25s ease;
+}
+
+.floso-status.show {
+  max-height: 40px;
+  opacity: 1;
+  padding: 9px 16px;
+}
+
+.floso-status.error {
+  color: #ff8a7a;
+}
+
+/* ---------- list ---------- */
+
+.floso-list-wrap {
+  overflow-y: auto;
+  padding: 12px 12px 16px;
+}
+
+.floso-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.floso-empty {
+  text-align: center;
+  padding: 34px 14px;
+  color: #6f7579;
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.floso-empty-icon {
+  width: 30px;
+  height: 30px;
+  margin: 0 auto 14px;
+  display: block;
+  opacity: 0.55;
+}
+
+.floso-empty-title {
+  color: #e4e6e8;
+  font-weight: 600;
+  font-size: 13px;
+  margin: 0;
+}
+
+.floso-empty-sub {
+  color: #565b5e;
+  font-size: 11.5px;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+.floso-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 4px 10px;
+}
+
+.floso-list-count {
+  font-size: 10.5px;
+  font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
+  color: #6f7579;
+  letter-spacing: 0.3px;
+}
+
+.floso-text-btn {
+  appearance: none;
+  background: none;
+  border: none;
+  font-size: 11px;
+  font-weight: 600;
+  color: #6f7579;
+  cursor: pointer;
+  padding: 2px 4px;
+  transition: color 0.15s ease;
+}
+
+.floso-text-btn:hover {
+  color: #e4e6e8;
+}
+
+.floso-text-btn--danger:hover {
+  color: #ff5c5c;
+}
+
+.floso-site-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.05);
+  color: #9aa0a4;
+}
+
+.floso-site-badge::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.floso-site-badge--claude::before {
+  background: #d97757;
+}
+
+.floso-site-badge--chatgpt::before {
+  background: #74aa9c;
+}
+
+.floso-site-badge--gemini::before {
+  background: #6ba7ea;
+}
+
+.floso-card {
+  background: #101112;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  padding: 13px 14px;
+  position: relative;
+  transition: border-color 0.6s ease-out, box-shadow 0.7s ease-out;
+}
+
+.floso-card:hover {
+  border-color: rgba(17, 184, 167, 0.55);
+  background: #101112;
+  box-shadow: 0 0 0 1px rgba(17, 184, 167, 0.12), 0 0 24px rgba(17, 184, 167, 0.1);
+}
+
+.floso-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.floso-card-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #f5f6f7;
+  line-height: 1.4;
+  margin: 0;
+  word-break: break-word;
+}
+
+.floso-card-meta {
+  font-size: 10.5px;
+  font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
+  color: #6f7579;
+  margin: 6px 0 0;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.floso-card-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.floso-icon-btn {
+  appearance: none;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: #16181a;
+  color: #b0b5b9;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 11px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.floso-icon-btn:hover {
+  background: #1c1f21;
+  border-color: rgba(45, 212, 191, 0.45);
+  color: #f5f6f7;
+}
+
+.floso-icon-btn--danger:hover {
+  background: rgba(255, 92, 92, 0.12);
+  border-color: rgba(255, 92, 92, 0.55);
+  color: #ff8a8a;
+}
+
+.floso-card-messages {
+  margin-top: 11px;
+  padding-top: 11px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.floso-card-messages.open {
+  display: flex;
+}
+
+.floso-msg {
+  font-size: 11.5px;
+  line-height: 1.55;
+  padding: 8px 10px;
+  border-radius: 9px;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.floso-msg--user {
+  background: #16181a;
+  color: #dcdedf;
+  border-left: 2px solid #2dd4bf;
+  border-radius: 0 9px 9px 0;
+}
+
+.floso-msg--assistant {
+  background: #101112;
+  color: #9aa0a4;
+  border-left: 2px solid rgba(255,255,255,0.15);
+  border-radius: 0 9px 9px 0;
+}
