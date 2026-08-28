@@ -2,66 +2,113 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Floso</title>
   <link rel="stylesheet" href="popup.css" />
 </head>
 <body>
   <div class="floso-shell">
-
     <header class="floso-header">
       <div class="floso-header-top">
         <div class="floso-brand">
           <svg class="floso-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="2" y="7" width="11" height="6" rx="3" transform="rotate(-20 7.5 10)" stroke="url(#linkGrad)" stroke-width="2"/>
             <rect x="11" y="11" width="11" height="6" rx="3" transform="rotate(-20 16.5 14)" stroke="url(#linkGrad)" stroke-width="2"/>
-            <defs>
-              <linearGradient id="linkGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#cfd6de"/>
-                <stop offset="1" stop-color="#2dd4bf"/>
-              </linearGradient>
-            </defs>
+            <defs><linearGradient id="linkGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop stop-color="#cfd6de"/><stop offset="1" stop-color="#2dd4bf"/></linearGradient></defs>
           </svg>
           <span class="floso-title">FLOSO</span>
         </div>
-
         <div class="floso-credit">
           <span class="credit-author">Made by Suren</span>
           <span class="credit-email">yerrasuren@gmail.com</span>
         </div>
       </div>
 
-      <button id="capture-btn" class="floso-btn floso-btn--primary">
-        <span class="floso-btn-label">Capture current chat</span>
-      </button>
+      <div class="floso-tabs" role="tablist" aria-label="Floso tools">
+        <button id="context-tab" class="floso-tab active" role="tab" aria-selected="true">Context</button>
+        <button id="optimize-tab" class="floso-tab" role="tab" aria-selected="false">Optimize <span class="floso-tab-star">✦</span></button>
+        <span id="tab-indicator" class="floso-tab-indicator"></span>
+      </div>
+
+      <div id="context-actions" class="floso-view floso-view-active">
+        <button id="capture-btn" class="floso-btn floso-btn--primary">
+          <span class="floso-btn-label">Capture current chat</span>
+        </button>
+      </div>
     </header>
 
     <div id="status-line" class="floso-status"></div>
 
-    <main class="floso-list-wrap">
-      <div id="empty-state" class="floso-empty" hidden>
-        <svg class="floso-empty-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="2" y="7" width="11" height="6" rx="3" transform="rotate(-20 7.5 10)" stroke="url(#emptyGrad)" stroke-width="1.6"/>
-          <rect x="11" y="11" width="11" height="6" rx="3" transform="rotate(-20 16.5 14)" stroke="url(#emptyGrad)" stroke-width="1.6"/>
-          <defs>
-            <linearGradient id="emptyGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#4a5560"/>
-              <stop offset="1" stop-color="#2dd4bf"/>
-            </linearGradient>
-          </defs>
-        </svg>
-        <p class="floso-empty-title">Nothing captured yet</p>
-        <p class="floso-empty-sub">Open a conversation on claude.ai, chatgpt.com, or gemini.google.com, then click "Capture current chat" above.</p>
-      </div>
+    <main class="floso-content-viewport">
+      <section id="context-view" class="floso-panel floso-panel-active" role="tabpanel">
+        <div class="floso-list-wrap">
+          <div id="empty-state" class="floso-empty" hidden>
+            <svg class="floso-empty-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="7" width="11" height="6" rx="3" transform="rotate(-20 7.5 10)" stroke="url(#emptyGrad)" stroke-width="1.6"/>
+              <rect x="11" y="11" width="11" height="6" rx="3" transform="rotate(-20 16.5 14)" stroke="url(#emptyGrad)" stroke-width="1.6"/>
+              <defs><linearGradient id="emptyGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop stop-color="#4a5560"/><stop offset="1" stop-color="#2dd4bf"/></linearGradient></defs>
+            </svg>
+            <p class="floso-empty-title">Nothing captured yet</p>
+            <p class="floso-empty-sub">Open a conversation on claude.ai, chatgpt.com, or gemini.google.com, then click "Capture current chat" above.</p>
+          </div>
+          <div id="list-header" class="floso-list-header" hidden>
+            <span id="capsule-count" class="floso-list-count"></span>
+            <button id="clear-all-btn" class="floso-text-btn floso-text-btn--danger">Clear all</button>
+          </div>
+          <ul id="capsule-list" class="floso-list"></ul>
+        </div>
+      </section>
 
-      <div id="list-header" class="floso-list-header" hidden>
-        <span id="capsule-count" class="floso-list-count"></span>
-        <button id="clear-all-btn" class="floso-text-btn floso-text-btn--danger">Clear all</button>
-      </div>
-      <ul id="capsule-list" class="floso-list"></ul>
+      <section id="optimize-view" class="floso-panel" role="tabpanel" aria-hidden="true">
+        <div class="floso-optimize-wrap">
+          <div class="floso-optimize-intro">
+            <div>
+              <div class="floso-optimize-title">Token Optimization</div>
+              <div class="floso-optimize-sub">Compress context while keeping the intent intact.</div>
+            </div>
+            <span class="floso-local-badge">LOCAL</span>
+          </div>
+
+          <div class="floso-control-row">
+            <label class="floso-control-label" for="model-select">Model profile</label>
+            <select id="model-select" class="floso-select">
+              <option value="universal">Universal</option>
+              <option value="chatgpt">ChatGPT</option>
+              <option value="claude">Claude</option>
+              <option value="gemini">Gemini</option>
+            </select>
+          </div>
+
+          <div class="floso-control-row">
+            <label class="floso-control-label" for="optimization-level">Compression</label>
+            <select id="optimization-level" class="floso-select">
+              <option value="safe">Safe — preserve wording</option>
+              <option value="balanced" selected>Balanced — recommended</option>
+              <option value="compact">Compact — maximum reduction</option>
+            </select>
+          </div>
+
+          <textarea id="optimizer-input" class="floso-textarea" placeholder="Paste context here, or select Optimize on a saved capsule."></textarea>
+
+          <div class="floso-stats" aria-live="polite">
+            <div class="floso-stat"><span>Original</span><strong id="original-tokens">0</strong><small>estimated tokens</small></div>
+            <div class="floso-stat"><span>Optimized</span><strong id="optimized-tokens">0</strong><small>estimated tokens</small></div>
+            <div class="floso-stat floso-stat--saving"><span>Saved</span><strong id="saved-percent">0%</strong><small>estimated reduction</small></div>
+          </div>
+
+          <div class="floso-preview-label"><span>Optimized context</span><span id="optimization-note">Waiting for input</span></div>
+          <textarea id="optimizer-output" class="floso-textarea floso-textarea-output" readonly placeholder="Your optimized context will appear here."></textarea>
+
+          <div class="floso-optimize-actions">
+            <button id="run-optimize-btn" class="floso-btn floso-btn--primary">Optimize context</button>
+            <button id="copy-optimized-btn" class="floso-icon-btn" disabled>Copy</button>
+          </div>
+          <p class="floso-disclaimer">Token counts are estimates. Floso uses a local, model-aware formatting profile; it does not send your context to a server.</p>
+        </div>
+      </section>
     </main>
-
   </div>
-
+  <script src="floso-optimizer.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>
