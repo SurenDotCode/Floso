@@ -1,359 +1,110 @@
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
   width: 340px;
   max-height: 480px;
-  background:
-    radial-gradient(ellipse at 50% 120%, rgba(45, 212, 191, 0.07), transparent 55%),
-    #0b0c0d;
+  background: radial-gradient(ellipse at 50% 120%, rgba(45, 212, 191, 0.07), transparent 55%), #0b0c0d;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: #e4e6e8;
 }
 
-.floso-mono {
-  font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
-}
+.floso-mono { font-family: "SF Mono", "Cascadia Code", Consolas, monospace; }
 
-.floso-shell {
-  display: flex;
-  flex-direction: column;
-  max-height: 480px;
-}
+.floso-shell { display: flex; flex-direction: column; max-height: 480px; overflow: hidden; }
 
-/* ---------- header ---------- */
+.floso-header { display: flex; flex-direction: column; gap: 12px; padding: 16px 16px 14px; background: #101112; border-bottom: 1px solid rgba(255,255,255,0.07); }
+.floso-header-top { display: flex; align-items: center; justify-content: space-between; }
+.floso-brand { display: flex; align-items: center; gap: 8px; }
+.floso-logo { width: 21px; height: 21px; flex-shrink: 0; }
+.floso-title { font-size: 13px; font-weight: 700; letter-spacing: 3px; color: #f5f6f7; }
+.floso-credit { display: flex; flex-direction: column; align-items: flex-end; text-align: right; line-height: 1.25; }
+.credit-author { font-size: 10px; font-weight: 500; color: #8b9298; }
+.credit-email { font-size: 9px; font-family: "SF Mono", "Cascadia Code", Consolas, monospace; color: #2dd4bf; opacity: 0.85; }
 
-.floso-header {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 16px 16px 14px;
-  background: #101112;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-}
+.floso-tabs { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 3px; background: #0b0c0d; border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; }
+.floso-tab { appearance: none; position: relative; z-index: 1; border: 0; background: transparent; color: #6f7579; font-size: 11px; font-weight: 650; padding: 7px 8px; border-radius: 7px; cursor: pointer; transition: color .2s ease; }
+.floso-tab:hover { color: #cdd2d5; }
+.floso-tab.active { color: #f3f5f6; }
+.floso-tab-star { color: #2dd4bf; margin-left: 2px; }
+.floso-tab-indicator { position: absolute; top: 3px; bottom: 3px; left: 3px; width: calc(50% - 5px); border-radius: 7px; background: #191c1e; border: 1px solid rgba(45,212,191,.13); transition: transform .24s cubic-bezier(.22,.61,.36,1); }
+.floso-tab:nth-child(2).active ~ .floso-tab-indicator { transform: translateX(calc(100% + 4px)); }
 
-.floso-header-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+.floso-btn { appearance: none; border: 1px solid rgba(255,255,255,0.1); background: #16181a; color: #e4e6e8; font-size: 12.5px; font-weight: 600; letter-spacing: .3px; padding: 10px 14px; border-radius: 10px; cursor: pointer; transition: background .2s ease, border-color .2s ease, transform .15s ease, opacity .2s ease; }
+.floso-btn:hover { background: #1c1f21; border-color: rgba(45,212,191,.45); }
+.floso-btn:active { transform: scale(.98); background: #131415; }
+.floso-btn:disabled { opacity: .55; cursor: wait; }
+.floso-btn--primary { width: 100%; }
+.floso-view-hidden { display: none; }
 
-.floso-brand {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+.floso-status { min-height: 0; font-size: 11.5px; font-family: "SF Mono", "Cascadia Code", Consolas, monospace; padding: 0 16px; color: #2dd4bf; overflow: hidden; max-height: 0; opacity: 0; transition: max-height .25s ease, opacity .25s ease, padding .25s ease; }
+.floso-status.show { max-height: 40px; opacity: 1; padding: 9px 16px; }
+.floso-status.error { color: #ff8a7a; }
 
-.floso-logo {
-  width: 21px;
-  height: 21px;
-  flex-shrink: 0;
-}
+.floso-content-viewport { position: relative; min-height: 0; overflow: hidden; }
+.floso-panel { display: none; min-height: 0; animation: flosoPanelIn .24s ease both; }
+.floso-panel-active { display: block; }
+@keyframes flosoPanelIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
 
-.floso-title {
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 3px;
-  color: #f5f6f7;
-}
+.floso-list-wrap { max-height: 350px; overflow-y: auto; padding: 12px 12px 16px; }
+.floso-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.floso-empty { text-align: center; padding: 34px 14px; color: #6f7579; font-size: 12.5px; line-height: 1.6; }
+.floso-empty-icon { width: 30px; height: 30px; margin: 0 auto 14px; display: block; opacity: .55; }
+.floso-empty-title { color: #e4e6e8; font-weight: 600; font-size: 13px; margin: 0; }
+.floso-empty-sub { color: #565b5e; font-size: 11.5px; margin-top: 8px; line-height: 1.6; }
+.floso-list-header { display: flex; align-items: center; justify-content: space-between; padding: 2px 4px 10px; }
+.floso-list-count { font-size: 10.5px; font-family: "SF Mono", "Cascadia Code", Consolas, monospace; color: #6f7579; letter-spacing: .3px; }
+.floso-text-btn { appearance: none; background: none; border: none; font-size: 11px; font-weight: 600; color: #6f7579; cursor: pointer; padding: 2px 4px; transition: color .15s ease; }
+.floso-text-btn:hover { color: #e4e6e8; }
+.floso-text-btn--danger:hover { color: #ff5c5c; }
+.floso-site-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-family: "SF Mono", "Cascadia Code", Consolas, monospace; padding: 2px 7px; border-radius: 999px; background: rgba(255,255,255,.05); color: #9aa0a4; }
+.floso-site-badge::before { content: ""; width: 5px; height: 5px; border-radius: 50%; display: inline-block; }
+.floso-site-badge--claude::before { background: #d97757; }
+.floso-site-badge--chatgpt::before { background: #74aa9c; }
+.floso-site-badge--gemini::before { background: #6ba7ea; }
+.floso-card { background: #101112; border: 1px solid rgba(255,255,255,.07); border-radius: 14px; padding: 13px 14px; position: relative; transition: border-color .6s ease-out, box-shadow .7s ease-out; }
+.floso-card:hover { border-color: rgba(17,184,167,.55); background: #101112; box-shadow: 0 0 0 1px rgba(17,184,167,.12), 0 0 24px rgba(17,184,167,.1); }
+.floso-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.floso-card-title { font-size: 12.5px; font-weight: 600; color: #f5f6f7; line-height: 1.4; margin: 0; word-break: break-word; }
+.floso-card-meta { font-size: 10.5px; font-family: "SF Mono", "Cascadia Code", Consolas, monospace; color: #6f7579; margin: 6px 0 0; display: flex; gap: 10px; align-items: center; }
+.floso-card-actions { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+.floso-icon-btn { appearance: none; border: 1px solid rgba(255,255,255,.1); background: #16181a; color: #b0b5b9; font-size: 11px; font-weight: 600; padding: 6px 11px; border-radius: 8px; cursor: pointer; transition: background .15s ease, border-color .15s ease, color .15s ease, opacity .15s ease; }
+.floso-icon-btn:hover { background: #1c1f21; border-color: rgba(45,212,191,.45); color: #f5f6f7; }
+.floso-icon-btn:disabled { opacity: .5; cursor: default; }
+.floso-icon-btn--optimize:hover { color: #2dd4bf; }
+.floso-icon-btn--danger:hover { background: rgba(255,92,92,.12); border-color: rgba(255,92,92,.55); color: #ff8a8a; }
+.floso-card-messages { margin-top: 11px; padding-top: 11px; border-top: 1px solid rgba(255,255,255,.07); display: none; flex-direction: column; gap: 8px; max-height: 220px; overflow-y: auto; }
+.floso-card-messages.open { display: flex; }
+.floso-msg { font-size: 11.5px; line-height: 1.55; padding: 8px 10px; border-radius: 9px; word-break: break-word; white-space: pre-wrap; }
+.floso-msg--user { background: #16181a; color: #dcdedf; border-left: 2px solid #2dd4bf; border-radius: 0 9px 9px 0; }
+.floso-msg--assistant { background: #101112; color: #9aa0a4; border-left: 2px solid rgba(255,255,255,.15); border-radius: 0 9px 9px 0; }
 
-/* ---------- header credit ---------- */
+/* v1.2 optimization workspace */
+.floso-optimize-wrap { max-height: 350px; overflow-y: auto; padding: 14px 14px 16px; }
+.floso-optimize-intro { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; margin-bottom: 12px; }
+.floso-optimize-title { font-size: 14px; font-weight: 700; color: #f4f6f7; }
+.floso-optimize-sub { margin-top: 4px; font-size: 10.5px; line-height: 1.45; color: #70777b; }
+.floso-local-badge { flex: none; font: 8px "SF Mono", Consolas, monospace; letter-spacing: 1px; color: #2dd4bf; border: 1px solid rgba(45,212,191,.2); border-radius: 999px; padding: 3px 6px; }
+.floso-control-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 7px 0; }
+.floso-control-label { font-size: 10.5px; color: #8c9397; }
+.floso-select { width: 176px; border: 1px solid rgba(255,255,255,.08); background: #151718; color: #dfe3e5; border-radius: 7px; padding: 6px 8px; font-size: 10.5px; outline: none; }
+.floso-select:focus { border-color: rgba(45,212,191,.45); }
+.floso-textarea { width: 100%; min-height: 72px; resize: vertical; margin-top: 10px; border: 1px solid rgba(255,255,255,.08); background: #0c0e0f; color: #dfe3e5; border-radius: 9px; padding: 9px 10px; font: 10.5px/1.5 "SF Mono", "Cascadia Code", Consolas, monospace; outline: none; }
+.floso-textarea:focus { border-color: rgba(45,212,191,.4); box-shadow: 0 0 0 2px rgba(45,212,191,.05); }
+.floso-textarea::placeholder { color: #4f5559; }
+.floso-textarea-output { min-height: 82px; color: #c9eeee; }
+.floso-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; }
+.floso-stat { min-width: 0; padding: 7px 6px; background: #111315; border: 1px solid rgba(255,255,255,.06); border-radius: 8px; text-align: center; }
+.floso-stat span, .floso-stat small { display: block; color: #60676b; font-size: 8.5px; }
+.floso-stat strong { display: block; margin: 2px 0; color: #dfe4e6; font: 700 13px "SF Mono", Consolas, monospace; }
+.floso-stat--saving strong { color: #2dd4bf; }
+.floso-preview-label { display: flex; justify-content: space-between; gap: 8px; margin-top: 10px; font-size: 9.5px; color: #8b9296; }
+.floso-preview-label span:last-child { color: #4f7f7a; text-align: right; }
+.floso-optimize-actions { display: flex; gap: 6px; margin-top: 8px; }
+.floso-optimize-actions .floso-btn { flex: 1; padding: 8px 10px; font-size: 11px; }
+.floso-disclaimer { margin: 8px 2px 0; font-size: 8.5px; line-height: 1.4; color: #50565a; }
 
-.floso-credit {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  text-align: right;
-  line-height: 1.25;
-}
-
-.credit-author {
-  font-size: 10px;
-  font-weight: 500;
-  color: #8b9298;
-}
-
-.credit-email {
-  font-size: 9px;
-  font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
-  color: #2dd4bf;
-  opacity: 0.85;
-}
-
-/* ---------- buttons & interactions ---------- */
-
-.floso-btn {
-  appearance: none;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: #16181a;
-  color: #e4e6e8;
-  font-size: 12.5px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  padding: 10px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
-}
-
-.floso-btn:hover {
-  background: #1c1f21;
-  border-color: rgba(45, 212, 191, 0.45);
-}
-
-.floso-btn:active {
-  transform: scale(0.98);
-  background: #131415;
-}
-
-.floso-btn--primary {
-  width: 100%;
-}
-
-/* ---------- status line ---------- */
-
-.floso-status {
-  min-height: 0;
-  font-size: 11.5px;
-  font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
-  padding: 0 16px;
-  color: #2dd4bf;
-  overflow: hidden;
-  max-height: 0;
-  opacity: 0;
-  transition: max-height 0.25s ease, opacity 0.25s ease, padding 0.25s ease;
-}
-
-.floso-status.show {
-  max-height: 40px;
-  opacity: 1;
-  padding: 9px 16px;
-}
-
-.floso-status.error {
-  color: #ff8a7a;
-}
-
-/* ---------- list ---------- */
-
-.floso-list-wrap {
-  overflow-y: auto;
-  padding: 12px 12px 16px;
-}
-
-.floso-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.floso-empty {
-  text-align: center;
-  padding: 34px 14px;
-  color: #6f7579;
-  font-size: 12.5px;
-  line-height: 1.6;
-}
-
-.floso-empty-icon {
-  width: 30px;
-  height: 30px;
-  margin: 0 auto 14px;
-  display: block;
-  opacity: 0.55;
-}
-
-.floso-empty-title {
-  color: #e4e6e8;
-  font-weight: 600;
-  font-size: 13px;
-  margin: 0;
-}
-
-.floso-empty-sub {
-  color: #565b5e;
-  font-size: 11.5px;
-  margin-top: 8px;
-  line-height: 1.6;
-}
-
-.floso-list-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 2px 4px 10px;
-}
-
-.floso-list-count {
-  font-size: 10.5px;
-  font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
-  color: #6f7579;
-  letter-spacing: 0.3px;
-}
-
-.floso-text-btn {
-  appearance: none;
-  background: none;
-  border: none;
-  font-size: 11px;
-  font-weight: 600;
-  color: #6f7579;
-  cursor: pointer;
-  padding: 2px 4px;
-  transition: color 0.15s ease;
-}
-
-.floso-text-btn:hover {
-  color: #e4e6e8;
-}
-
-.floso-text-btn--danger:hover {
-  color: #ff5c5c;
-}
-
-.floso-site-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 10px;
-  font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
-  padding: 2px 7px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.05);
-  color: #9aa0a4;
-}
-
-.floso-site-badge::before {
-  content: "";
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.floso-site-badge--claude::before {
-  background: #d97757;
-}
-
-.floso-site-badge--chatgpt::before {
-  background: #74aa9c;
-}
-
-.floso-site-badge--gemini::before {
-  background: #6ba7ea;
-}
-
-.floso-card {
-  background: #101112;
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 14px;
-  padding: 13px 14px;
-  position: relative;
-  transition: border-color 0.6s ease-out, box-shadow 0.7s ease-out;
-}
-
-.floso-card:hover {
-  border-color: rgba(17, 184, 167, 0.55);
-  background: #101112;
-  box-shadow: 0 0 0 1px rgba(17, 184, 167, 0.12), 0 0 24px rgba(17, 184, 167, 0.1);
-}
-
-.floso-card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-.floso-card-title {
-  font-size: 12.5px;
-  font-weight: 600;
-  color: #f5f6f7;
-  line-height: 1.4;
-  margin: 0;
-  word-break: break-word;
-}
-
-.floso-card-meta {
-  font-size: 10.5px;
-  font-family: "SF Mono", "Cascadia Code", Consolas, monospace;
-  color: #6f7579;
-  margin: 6px 0 0;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.floso-card-actions {
-  display: flex;
-  gap: 6px;
-  margin-top: 10px;
-}
-
-.floso-icon-btn {
-  appearance: none;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: #16181a;
-  color: #b0b5b9;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 6px 11px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-}
-
-.floso-icon-btn:hover {
-  background: #1c1f21;
-  border-color: rgba(45, 212, 191, 0.45);
-  color: #f5f6f7;
-}
-
-.floso-icon-btn--danger:hover {
-  background: rgba(255, 92, 92, 0.12);
-  border-color: rgba(255, 92, 92, 0.55);
-  color: #ff8a8a;
-}
-
-.floso-card-messages {
-  margin-top: 11px;
-  padding-top: 11px;
-  border-top: 1px solid rgba(255,255,255,0.07);
-  display: none;
-  flex-direction: column;
-  gap: 8px;
-  max-height: 220px;
-  overflow-y: auto;
-}
-
-.floso-card-messages.open {
-  display: flex;
-}
-
-.floso-msg {
-  font-size: 11.5px;
-  line-height: 1.55;
-  padding: 8px 10px;
-  border-radius: 9px;
-  word-break: break-word;
-  white-space: pre-wrap;
-}
-
-.floso-msg--user {
-  background: #16181a;
-  color: #dcdedf;
-  border-left: 2px solid #2dd4bf;
-  border-radius: 0 9px 9px 0;
-}
-
-.floso-msg--assistant {
-  background: #101112;
-  color: #9aa0a4;
-  border-left: 2px solid rgba(255,255,255,0.15);
-  border-radius: 0 9px 9px 0;
-}
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #272b2e; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #353a3e; }

@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Floso",
-  "version": "0.1.0",
-  "description": "Capture an AI chat's context locally and carry it into a different AI tool — free, no server, no tracking.",
+  "version": "1.2.0",
+  "description": "Capture, carry, and locally optimize AI conversation context across supported AI tools.",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
@@ -17,9 +17,7 @@
     "default_title": "Floso",
     "default_popup": "popup.html"
   },
-  "permissions": [
-    "storage"
-  ],
+  "permissions": ["storage"],
   "host_permissions": [
     "https://claude.ai/*",
     "https://chatgpt.com/*",
